@@ -8,6 +8,7 @@ import './train.dart';
 import './hotel.dart';
 import './location.dart';
 import './profile.dart';
+import './trip_details.dart';
 import 'dart:async';
 
 void main() {
@@ -31,6 +32,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _showOverlay = false;
+
+  void _toggleOverlay() {
+    setState(() {
+      _showOverlay = !_showOverlay;
+    });
+  }
+
   final List<Map<String, dynamic>> categories = [
     {"name": "Flight", "icon": Icons.airplane_ticket, "page": FlightPage()},
     {"name": "Train", "icon": Icons.train, "page": TrainPage()},
@@ -93,6 +102,37 @@ class _MyHomePageState extends State<MyHomePage> {
       "description": "Symbol of love in India.",
     },
     // Add more places here (total 21 for 3x7)
+  ];
+
+  List<String> states = [
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttar Pradesh",
+    "Uttarakhand",
+    "West Bengal",
   ];
 
   final PageController _pageController = PageController(initialPage: 0);
@@ -343,7 +383,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       SizedBox(height: 30),
 
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: _toggleOverlay,
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                             horizontal: 30,
@@ -364,6 +404,89 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                       ),
+
+                      // Overlay
+                      if (_showOverlay)
+                        GestureDetector(
+                          onTap: _toggleOverlay, // Close overlay when tapped
+                          child: Center(
+                            child: GestureDetector(
+                              onTap:
+                                  () {}, // Prevent closing when tapping inside
+                              child: Container(
+                                width: 1200,
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Trip Started!",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 15),
+
+                                    // Grid of 28 State Buttons
+                                    Wrap(
+                                      spacing: 8,
+                                      runSpacing: 8,
+                                      children: List.generate(states.length, (
+                                        index,
+                                      ) {
+                                        final state = states[index];
+                                        return ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (context) =>
+                                                        TripDetailsPage(
+                                                          state: state,
+                                                          index: index,
+                                                        ),
+                                              ),
+                                            );
+                                          },
+                                          child: Text(
+                                            state,
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                        );
+                                      }),
+                                    ),
+
+                                    SizedBox(height: 20),
+                                    ElevatedButton(
+                                      onPressed: _toggleOverlay,
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                          255,
+                                          209,
+                                          77,
+                                          36,
+                                        ), // Change button background color
+                                      ),
+                                      child: Text(
+                                        "Close",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ), // Set text color
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
                       SizedBox(height: 30),
                       Center(
                         child: Container(
