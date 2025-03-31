@@ -9,6 +9,7 @@ import './hotel.dart';
 import './location.dart';
 import './profile.dart';
 import './trip_details.dart';
+import './gold_credit.dart';
 import 'dart:async';
 
 void main() {
@@ -135,6 +136,28 @@ class _MyHomePageState extends State<MyHomePage> {
     "West Bengal",
   ];
 
+  int _counter = 0;
+
+  void _navigateToGoldCreditPage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => GoldCreditPage(counter: _counter)),
+    );
+
+    if (result != null) {
+      setState(() {
+        _counter = result;
+      });
+    }
+  }
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+    _navigateToGoldCreditPage();
+  }
+
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   final List<String> _ads = [
@@ -220,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         _buildIconText(
                           Icons.monetization_on,
                           const Color.fromARGB(255, 252, 199, 40),
-                          '25 / 28',
+                          "$_counter / 28",
                         ),
                         SizedBox(width: 10),
                         _buildIconText(

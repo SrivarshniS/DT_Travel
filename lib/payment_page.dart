@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './gold_credit.dart';
+
 
 class PaymentPage extends StatefulWidget {
   final double totalAmount;
@@ -12,6 +14,7 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   bool _isPaymentSuccessful = false;  // Track the payment success
   bool _isProcessingPayment = false;  // Track if the payment process is running
+  int _counter = 0;  // Counter to track the number of payments or transactions
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +125,18 @@ class _PaymentPageState extends State<PaymentPage> {
                         SizedBox(height: 40),
                         TextButton(
                           onPressed: () {
-                            // Close the payment screen or navigate to another page
-                            Navigator.pop(context);
+                            // Increment the counter
+                            setState(() {
+                              _counter++;  // Increment counter
+                            });
+
+                            // Pass the updated counter to the gold_credit page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GoldCreditPage(counter: _counter),
+                              ),
+                            );
                           },
                           child: Text(
                             'Done',
