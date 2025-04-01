@@ -170,7 +170,7 @@ class _PaymentPageState extends State<PaymentPage> {
     );
 
     // Simulate payment success after 6 seconds
-    Future.delayed(Duration(seconds: 6), () {
+    Future.delayed(Duration(seconds: 4), () {
       setState(() {
         _isPaymentSuccessful = true;  // Show the success message and animation
         _isProcessingPayment = false;

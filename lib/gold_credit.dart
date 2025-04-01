@@ -9,7 +9,7 @@ class GoldCreditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Automatically navigate back after 5 seconds
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MyHomePage()),
